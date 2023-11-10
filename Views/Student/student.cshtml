@@ -11,7 +11,7 @@
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
        <i class="fa fa-plus"></i> Add Students
     </button>
-
+    
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -72,8 +72,8 @@
                     <td>@row["name"]</td>
                     <td>@row["course_name"]</td>
                     <td>
-                        <a href="/student?action=update&id=@row["student_id"]" class="btn btn-success btn-sm"><i class="fa fa-check" aria-hidden="true"></i> Update</a> ||
-                        <a href="/student?action=delete&id=@row["student_id"]" class="btn btn-danger btn-sm"><i class="fa fa-times" aria-hidden="true"></i> Delete</a>
+                        <a href="/student/details?id=@row["student_id"]" class="btn btn-success btn-sm"><i class="fa fa-check" aria-hidden="true"></i> Update</a> ||
+                        <a href="/student/delete?id=@row["student_id"]" class="btn btn-danger btn-sm"><i class="fa fa-times" aria-hidden="true"></i> Delete</a>
                     </td>
                 </tr>
             }

@@ -81,7 +81,37 @@ namespace WebApplication1.Controllers
         // GET: StudentController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            DataTable dtable_student = new DataTable();
+            DataTable dtable_course = new DataTable();
+
+            using (SqlConnection con = new SqlConnection(connection._sqlConnection()))
+            {
+                string query = "SELECT * FROM tblstudent INNER JOIN tblcourse ON tblcourse.course_id=tblstudent.course_id WHERE tblstudent.student_id = " + id;
+                using (SqlCommand cmd = new SqlCommand(query))
+                {
+                    cmd.Connection = con;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        sda.Fill(dtable_student);
+                    }
+                }
+
+                string query_course = "SELECT * FROM tblcourse";
+                using (SqlCommand cmd = new SqlCommand(query_course))
+                {
+
+                    cmd.Connection = con;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        sda.Fill(dtable_course);
+                    }
+                }
+            }
+
+            ViewBag.student = dtable_student;
+            ViewBag.course = dtable_course;
+
+            return View("editstudent");
         }
 
         // GET: StudentController/Create

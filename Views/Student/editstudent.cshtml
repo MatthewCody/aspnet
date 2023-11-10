@@ -1,0 +1,44 @@
+﻿@using System.Data
+@model DataRow
+@{
+    ViewData["Title"] = "Student Page";
+    DataTable ds = ViewBag.student as DataTable;
+    DataTable ds2 = ViewBag.course as DataTable;
+}
+
+<h3>Edit Student</h3>
+
+@foreach (DataRow row in ds.Rows)
+{
+    <div class="card">
+        <div class="card-header">
+            <h5>Edit @row["name"]</h5>
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <label>Student Name</label>
+                <input type="text" class="form-control" value="@row["name"]" />
+            </div>
+            <div class="mb-3">
+                <label>Course</label>
+                <select class="form-control">
+                    @foreach (DataRow row1 in ds2.Rows)
+                    {
+                        if (@row["course_id"] != @row1["course_id"])
+                        {
+                            <option value="@row1["course_id"]">@row1["course_name"]</option>
+                        }
+                        else
+                        {
+                            <option selected value="@row1["course_id"]">@row1["course_name"]</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="modal-footer">
+                @* <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> *@
+                <input value="Update Student" type="submit" class="btn btn-success btn-sm" />
+            </div>
+        </div>
+    </div>
+}
