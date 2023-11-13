@@ -167,7 +167,16 @@ namespace WebApplication1.Controllers
         // GET: CourseController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            using (SqlConnection con = new SqlConnection(connection._sqlConnection()))
+            {
+                string query = "DELETE FROM tblcourse WHERE course_id = " + id;
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+
+            return RedirectToAction("Index");
         }
 
         // POST: CourseController/Delete/5
