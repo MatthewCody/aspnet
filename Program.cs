@@ -30,4 +30,9 @@ app.MapControllerRoute(
     pattern: "{controller=Student}/{action=Student}/{id?}"
 );
 
+app.MapControllerRoute(
+    name: "course",
+    pattern: "{controller=Course}/{action=Course}/{id?}"
+);
+
 app.Run();

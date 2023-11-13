@@ -1,0 +1,47 @@
+﻿@using System.Data
+@model WebApplication1.Models.course
+@{
+    ViewData["Title"] = "Course Page";
+    DataTable ds2 = ViewBag.course as DataTable;
+    DataTable ds3 = ViewBag.department as DataTable;
+}
+
+<h3>Edit Course</h3>
+
+@foreach (DataRow row in ds2.Rows)
+{
+    <div class="card">
+        <div class="card-header">
+            <h5>Edit @row["course_name"]</h5>
+        </div>
+        <div class="card-body">
+            <form asp-controller="Course" method="post" asp-action="UpdateCourse" class="form-horizontal">
+                <input type="hidden" name="course_id" asp-for="course_id" value="@row["course_id"]" />
+                <div class="mb-3">
+                    <label>Student Name</label>
+                    <input type="text" name="course_name" asp-for="course_name" class="form-control" value="@row["course_name"]" />
+                </div>
+                <div class="mb-3">
+                    <label>Course</label>
+                    <select class="form-control" asp-for="department_id" name="department_id">
+                        @foreach (DataRow row1 in ds3.Rows)
+                        {
+                            if (row["department_id"] != row1["department_id"])
+                            {
+                                <option value="@row1["department_id"]">@row1["department_name"]</option>
+                            }
+                            else
+                            {
+                                <option selected value="@row1["department_id"]">@row1["department_name"]</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    @* <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> *@
+                    <input value="Update Course" type="submit" class="btn btn-success btn-sm" />
+                </div>
+            </form>
+        </div>
+    </div>
+}

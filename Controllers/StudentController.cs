@@ -78,6 +78,24 @@ namespace WebApplication1.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public ActionResult UpdateStudent(student student1)
+        {
+            using (SqlConnection con = new SqlConnection(connection._sqlConnection()))
+            {
+                string query = "UPDATE tblstudent SET name = @name, course_id = @course_id WHERE student_id = @student_id";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@student_id", student1.student_id);
+                cmd.Parameters.AddWithValue("@name", student1.name);
+                cmd.Parameters.AddWithValue("@course_id", student1.course_id);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+
+            return RedirectToAction("Index");
+        }
+
         // GET: StudentController/Details/5
         public ActionResult Details(int id)
         {
@@ -164,7 +182,16 @@ namespace WebApplication1.Controllers
         // GET: StudentController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            using (SqlConnection con = new SqlConnection(connection._sqlConnection()))
+            {
+                string query = "DELETE FROM tblstudent WHERE student_id = " + id;
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+
+            return RedirectToAction("Index");
         }
 
         // POST: StudentController/Delete/5

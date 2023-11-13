@@ -1,5 +1,5 @@
 ﻿@using System.Data
-@model DataRow
+@model WebApplication1.Models.student
 @{
     ViewData["Title"] = "Student Page";
     DataTable ds = ViewBag.student as DataTable;
@@ -15,30 +15,33 @@
             <h5>Edit @row["name"]</h5>
         </div>
         <div class="card-body">
-            <div class="mb-3">
-                <label>Student Name</label>
-                <input type="text" class="form-control" value="@row["name"]" />
-            </div>
-            <div class="mb-3">
-                <label>Course</label>
-                <select class="form-control">
-                    @foreach (DataRow row1 in ds2.Rows)
-                    {
-                        if (@row["course_id"] != @row1["course_id"])
+            <form asp-controller="Student" method="post" asp-action="UpdateStudent" class="form-horizontal">
+                <input type="hidden" name="student_id" asp-for="student_id" value="@row["student_id"]"/>
+                <div class="mb-3">
+                    <label>Student Name</label>
+                    <input type="text" name="name" asp-for="name" class="form-control" value="@row["name"]" />
+                </div>
+                <div class="mb-3">
+                    <label>Course</label>
+                    <select class="form-control" asp-for="course_id" name="course_id">
+                        @foreach (DataRow row1 in ds2.Rows)
                         {
-                            <option value="@row1["course_id"]">@row1["course_name"]</option>
+                            if (row["course_id"] != row1["course_id"])
+                            {
+                                <option value="@row1["course_id"]">@row1["course_name"]</option>
+                            }
+                            else
+                            {
+                                <option selected value="@row1["course_id"]">@row1["course_name"]</option>
+                            }
                         }
-                        else
-                        {
-                            <option selected value="@row1["course_id"]">@row1["course_name"]</option>
-                        }
-                    }
-                </select>
-            </div>
-            <div class="modal-footer">
-                @* <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> *@
-                <input value="Update Student" type="submit" class="btn btn-success btn-sm" />
-            </div>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    @* <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> *@
+                    <input value="Update Student" type="submit" class="btn btn-success btn-sm" />
+                </div>
+            </form>
         </div>
     </div>
 }
