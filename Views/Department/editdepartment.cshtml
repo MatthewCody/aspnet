@@ -1,0 +1,30 @@
+﻿@using System.Data
+@model WebApplication1.Models.department
+@{
+    ViewData["Title"] = "Department Page";
+    DataTable ds2 = ViewBag.department as DataTable;
+}
+
+<h3>Edit Department</h3>
+
+@foreach (DataRow row in ds2.Rows)
+{
+    <div class="card">
+        <div class="card-header">
+            <h5>Edit @row["department_name"]</h5>
+        </div>
+        <div class="card-body">
+            <form asp-controller="Department" method="post" asp-action="UpdateDepartment" class="form-horizontal">
+                <input type="hidden" name="department_id" asp-for="department_id" value="@row["department_id"]" />
+                <div class="mb-3">
+                    <label>Department Name</label>
+                    <input type="text" name="department_name" asp-for="department_name" class="form-control" value="@row["department_name"]" />
+                </div>
+                <div class="modal-footer">
+                    @* <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> *@
+                    <input value="Update Department" type="submit" class="btn btn-success btn-sm" />
+                </div>
+            </form>
+        </div>
+    </div>
+}
